@@ -3,9 +3,7 @@ version: "3.8"
 services:
   filebrowser:
     image: filebrowser/filebrowser:latest
-    command: ["filebrowser", "--noauth", "--database", "/database/filebrowser.db"]
-    environment:
-      - FB_NOAUTH=true   # 혹시 command가 무시되는 환경 대비
+    command: ["--noauth", "--database", "/database/filebrowser.db"]
     volumes:
       - filebrowser_data:/srv
       - filebrowser_database:/database
