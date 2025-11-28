@@ -21,25 +21,25 @@ services:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
     networks:
       - dokploy-network
-		labels:
-		  - "traefik.enable=true"
+    labels:
+      - "traefik.enable=true"
 
-		  # ✅ FileBrowser API 전용 라우터 (우선순위 매우 높게)
-		  - "traefik.http.routers.fbproxy-api.rule=Host(`file.sonub.com`) && PathPrefix(`/api/resources`)"
-		  - "traefik.http.routers.fbproxy-api.entrypoints=websecure"
-		  - "traefik.http.routers.fbproxy-api.tls=true"
-		  - "traefik.http.routers.fbproxy-api.priority=2000"
-		  - "traefik.http.routers.fbproxy-api.service=fbproxy-sonub"
+      # ✅ FileBrowser API 전용 라우터 (우선순위 매우 높게)
+      - "traefik.http.routers.fbproxy-api.rule=Host(`file.sonub.com`) && PathPrefix(`/api/resources`)"
+      - "traefik.http.routers.fbproxy-api.entrypoints=websecure"
+      - "traefik.http.routers.fbproxy-api.tls=true"
+      - "traefik.http.routers.fbproxy-api.priority=2000"
+      - "traefik.http.routers.fbproxy-api.service=fbproxy-sonub"
 
-		  # ✅ FileBrowser UI 라우터 (전체 경로)
-		  - "traefik.http.routers.fbproxy-ui.rule=Host(`file.sonub.com`)"
-		  - "traefik.http.routers.fbproxy-ui.entrypoints=websecure"
-		  - "traefik.http.routers.fbproxy-ui.tls=true"
-		  - "traefik.http.routers.fbproxy-ui.priority=1000"
-		  - "traefik.http.routers.fbproxy-ui.service=fbproxy-sonub"
+      # ✅ FileBrowser UI 라우터 (전체 경로)
+      - "traefik.http.routers.fbproxy-ui.rule=Host(`file.sonub.com`)"
+      - "traefik.http.routers.fbproxy-ui.entrypoints=websecure"
+      - "traefik.http.routers.fbproxy-ui.tls=true"
+      - "traefik.http.routers.fbproxy-ui.priority=1000"
+      - "traefik.http.routers.fbproxy-ui.service=fbproxy-sonub"
 
-		  # service 이름 유니크
-		  - "traefik.http.services.fbproxy-sonub.loadbalancer.server.port=80"
+      # service 이름 유니크
+      - "traefik.http.services.fbproxy-sonub.loadbalancer.server.port=80"
 
 volumes:
   filebrowser_data:
