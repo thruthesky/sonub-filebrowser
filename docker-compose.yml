@@ -1,19 +1,20 @@
 version: "3.8"
 
 services:
-  # 1) FileBrowser: 무인증 공개 업로드
   filebrowser:
     image: filebrowser/filebrowser:latest
-    command: ["--noauth", "--database", "/database/filebrowser.db"]
+    command: ["filebrowser", "--noauth", "--database", "/database/filebrowser.db"]
+    environment:
+      - FB_NOAUTH=true   # 혹시 command가 무시되는 환경 대비
     volumes:
       - filebrowser_data:/srv
       - filebrowser_database:/database
       - filebrowser_config:/config
     networks:
-      - dokploy-network
-    # ⚠️ 외부로 직접 노출하지 마세요. (ports 없음)
+      dokploy-network:
+        aliases:
+          - filebrowser-nonauth   # ✅ 고유 alias
 
-  # 2) Nginx 프록시: 외부 요청 받되 DELETE는 막음
   fb-proxy:
     image: nginx:alpine
     depends_on:
